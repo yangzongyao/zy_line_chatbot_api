@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from linebot import LineBotApi, WebhookHandler
 from linebot.models import TextSendMessage
 import json
@@ -21,6 +21,14 @@ def callback():
     line_bot_api.reply_message(reply_token, TextSendMessage(text=response_message))
     
     return 'OK'
+
+@app.route("/versions", methods=["GET"])
+def version():
+    data = {
+        "version": "1.0.0",
+        "description": "This is a simple LINE bot API."
+    }
+    return jsonify(data)
 
 if __name__ == "__main__":
     app.run()
